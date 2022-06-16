@@ -24,15 +24,14 @@ Kappital enhances service capabilities, observability to applications.
 </div>
 
 The Kappital consists of the following components:
-* Service-Catalog
+* **Service-Catalog**
   - Directory Cloud-Native Service Package. Support OCI storage format.
   - Support HelmChart, Operator-Framework Bundle.
-* Service-Manager
+* **Service-Manager**
   - Support full lifecycle of Cloud-Native Service such as install, upgrade, update and uninstall.
   - Deploy multi-cloud/multi-cluster/cloud-edge without any modifications.
   - Support Day2 Operation.
-
-* Service-Engine
+* **Service-Engine**
   - Support popular frameworks such as Helm,operator-framework.
   - Provide observability plugins. Enable monitoring,logging, alarm,etc.
 
