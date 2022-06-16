@@ -43,9 +43,9 @@ The Kappital consists of the following components:
 ## Contributing
 
 If you're interested in being a contributor and want to get involved in
-developing the KubeEdge code, please see [CONTRIBUTING](./contribute.md) for
+developing the Kappital code, please see [CONTRIBUTING](./contribute.md) for
 details on submitting patches and the contribution workflow.
 
 ## License
 
-KubeEdge is under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
+Kappital is under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
