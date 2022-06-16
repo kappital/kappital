@@ -24,14 +24,17 @@ Kappital enhances service capabilities, observability to applications.
 </div>
 
 The Kappital consists of the following components:
-* Catalog
+* Service-Catalog
   - Directory Cloud-Native Service Package. Support OCI storage format.
   - Support HelmChart, Operator-Framework Bundle.
-* Manager
+* Service-Manager
   - Support full lifecycle of Cloud-Native Service such as install, upgrade, update and uninstall.
+  - Deploy multi-cloud/multi-cluster/cloud-edge without any modifications.
+  - Support Day2 Operation.
 
 * Service-Engine
-
+  - Support popular frameworks such as Helm,operator-framework.
+  - Provide observability plugins. Enable monitoring,logging, alarm,etc.
 
 ## Roadmap
 
@@ -41,7 +44,7 @@ The Kappital consists of the following components:
 ## Contributing
 
 If you're interested in being a contributor and want to get involved in
-developing the KubeEdge code, please see [CONTRIBUTING](./CONTRIBUTING.md) for
+developing the KubeEdge code, please see [CONTRIBUTING](./contribute.md) for
 details on submitting patches and the contribution workflow.
 
 ## License
