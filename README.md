@@ -3,8 +3,8 @@
 __THIS PROJECT IS CURRENTLY IN PREVIEW. THE CODE AND DOCS ARE SUBJECT TO CHANGE WITHOUT NOTICE.__
 
 Kappital is an open source project that enables developers to manage cloud native applications across multiple clouds and edges
-with no changes to developer's applications. Kappital defines Cloud Native Service Package specifications. By complying with spec,
-Kappital enhances service capabilities, observability to applications.
+with no changes to developer's applications. Kappital defines [Cloud Native Service Package Specifications](./docs/spec/cloud_native_serivce_package_specification.md).
+By complying with spec, Kappital enhances service capabilities, observability to applications.
 
 ## Why Kappital
 * **Unified Cloud Native Service Management**
@@ -35,10 +35,13 @@ The Kappital consists of the following components:
   - Support popular frameworks such as Helm,operator-framework.
   - Provide observability plugins. Enable monitoring,logging, alarm,etc.
 
+## Cloud Native Service Package Specifications
+Please refer to [Cloud Native Service Package Specifications](./docs/spec/cloud_native_serivce_package_specification.md)
+for more details about concepts of Kappital. 
+
 ## Roadmap
 
 * [2022 Roadmap](./roadmap.md)
-
 
 ## Contributing
 
