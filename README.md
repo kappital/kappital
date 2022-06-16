@@ -1,5 +1,7 @@
 # Kappital
 
+__THIS PROJECT IS CURRENTLY IN PREVIEW. THE CODE AND DOCS ARE SUBJECT TO CHANGE WITHOUT NOTICE.__
+
 Kappital is an open source project that enables developers to manage cloud native applications across multiple clouds and edges
 with no changes to developer's applications. Kappital defines Cloud Native Service Package specifications. By complying with spec,
 Kappital enhances service capabilities, observability to applications.
