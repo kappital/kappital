@@ -10,7 +10,6 @@ This document gives a brief overview of the Kappital community roles with the re
 | [Reviewer](#member)       | Sponsor from 2 approvers, has good experience and history of review in specific package                         | Review contributions from other members                                                                 | Add `lgtm` label to specific PRs                                                                 |
 | [Approver](#approver)     | Sponsor from 2 maintainers, highly experienced and knowledge of domain, actively contributed to code and review | Review and approve contributions from community members                                                 | Write access to specific packages in relevant repository                                         |
 | [Maintainer](#maintainer) | Sponsor from 2 owners, shown good technical judgement in feature design/development and PR review               | Participate in release planning and feature development/maintenance                                     | Top level write access to relevant repository. Name entry in Maintainers file of the repository  |
-| [Owner](#owner)           | Sponsor from 3 owners, helps drive the overall Kappital project                                                 | Drive the overall technical roadmap of the project and set priorities of activities in release planning | Kappital GitHub organization Admin access                                                        |
 
 
 **Note :** It is mandatory for all Kappital community members to follow Kappital [Code of Conduct].
@@ -111,30 +110,6 @@ Has overall knowledge of the project and features in the project.
 - Mentor contributors and approvers
 - Have top level write access to relevant repository (able click Merge PR button when manual check-in is necessary)
 - Name entry in Maintainers file of the repository
-- Participate & Drive design/development of multiple features
-
-## Owner
-
-Owners are maintainers who have helped drive the overall project direction.
-Has deep understanding of Kappital and related domain and facilitates major agreement in release planning
-
-### Requirements
-
-- Sponsor from 3 owners
-- Maintainer for at least 2 months
-- Nominated by a project owner
-- Not opposed by any project owner
-- Helped in driving the overall project
-
-### Responsibilities and Privileges
-
-- Make technical decisions for the overall project
-- Drive the overall technical roadmap of the project
-- Set priorities of activities in release planning
-- Guide and mentor all other community members
-- Ensure all community members are following Code of Conduct
-- Although given admin access to all repositories, make sure all PRs are properly reviewed and merged
-- May get admin access to relevant repository based on requirement
 - Participate & Drive design/development of multiple features
 
 
