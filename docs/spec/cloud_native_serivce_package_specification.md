@@ -27,27 +27,27 @@ service-package/
 
  Metadata File describes cloud-native service's basic attributes such as name, version, type, description. More information see the table below:
 
-| Field Name        | Description                                                                                                    | Required | Value Example                               |
-|-------------------|----------------------------------------------------------------------------------------------------------------|----------|---------------------------------------------|
-| name              | service name, format "^[a-z][a-z0-9\_\-]*[a-z0-9]$"                                                            | YES      | kappital-service                            |
-| version           | service version                                                                                                | YES      | 0.1.0                                       |
-| type              | service type                                                                                                   | YES      | [helm, operator]                            |
-| alias             | service alias name                                                                                             | NO       | kappital-service-0.1.0                      |
-| briefDescription  | short description for service                                                                                  | NO       | NA                                          |
-| detailDescription | full description for service                                                                                   | NO       | NA                                          |
-| source            | service source such as artifacthub                                                                             | NO       | bitnami                                     |
-| repository        | store repository                                                                                               | NO       | default                                     |
-| minKubeVersion    | support Kubernetes minimum version                                                                             | NO       | 1.15                                        |
-| architecture      | support architecture                                                                                           | NO       | [x86, Arm64]                                |
-| capabilities      | define service capability. Scope: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights, Auto Pilot. | NO       | [Basic Install]                             |
-| category          | define service category, such as Database, Monitoring, Networking, Security, Storage.                          | NO       | [Database, Storage]                         |
-| devices           | devices the service making use of such as CPU, GPU, MPU.                                                       | NO       | [GPU]                                       |
-| industries        | the industry the service applied to, for example education application.                                        | No       | [education]                                 |
-| logo              | service logo including base64data, mediaType.                                                                  | NO       | base64data: xxxx <br/> mediaType: image/png |
-| maintainers       | service maintainer including attributes: name, email.                                                          | NO       | NA                                          |
-| provider          | service provider including attributes: name, url.                                                              | NO       | NA                                          |
-| scenes            | scenes the service applied to such as cloud, edge.                                                             | NO       | [Cloud, Edge]                               |
-| links             | link providing more information for the service including attributes: name, url.                               | NO       | NA                                          |
+| Field Name          | Description                                                                                                    | Required | Value Example                               |
+|---------------------|----------------------------------------------------------------------------------------------------------------|----------|---------------------------------------------|
+| `name`              | service name, format "^[a-z][a-z0-9\_\-]*[a-z0-9]$"                                                            | Y        | kappital-service                            |
+| `version`           | service version                                                                                                | Y        | 0.1.0                                       |
+| `type`              | service type                                                                                                   | Y        | [helm, operator]                            |
+| `alias`             | service alias name                                                                                             | N        | kappital-service-0.1.0                      |
+| `briefDescription`  | short description for service                                                                                  | N        | NA                                          |
+| `detailDescription` | full description for service                                                                                   | N        | NA                                          |
+| `source`            | service source such as artifacthub                                                                             | N        | bitnami                                     |
+| `repository`        | store repository                                                                                               | N        | default                                     |
+| `minKubeVersion`    | support Kubernetes minimum version                                                                             | N        | 1.15                                        |
+| `architecture`      | support architecture                                                                                           | N        | [x86, Arm64]                                |
+| `capabilities`      | define service capability. Scope: Basic Install, Seamless Upgrades, Full Lifecycle, Deep Insights, Auto Pilot. | N        | [Basic Install]                             |
+| `category`          | define service category, such as Database, Monitoring, Networking, Security, Storage.                          | N        | [Database, Storage]                         |
+| `devices`           | devices the service making use of such as CPU, GPU, MPU.                                                       | N        | [GPU]                                       |
+| `industries`        | the industry the service applied to, for example education application.                                        | N        | [education]                                 |
+| `logo`              | service logo including base64data, mediaType.                                                                  | N        | base64data: xxxx <br/> mediaType: image/png |
+| `maintainers`       | service maintainer including attributes: name, email.                                                          | N        | NA                                          |
+| `provider`          | service provider including attributes: name, url.                                                              | N        | NA                                          |
+| `scenes`            | scenes the service applied to such as cloud, edge.                                                             | N        | [Cloud, Edge]                               |
+| `links`             | link providing more information for the service including attributes: name, url.                               | N        | NA                                          |
 
 
 **medata yaml example:**
