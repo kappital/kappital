@@ -1,6 +1,6 @@
 # Cloud Native Service Package Specification
 
-Cloud Native Service Specification(spec) provide a standard definition of cloud-native services irrelevant to the cloud platform, describe the deployment and governance capabilities of cloud-native services.
+Cloud Native Service Specification(spec) provides a standard definition of cloud-native service irrelevant to the cloud platform, describing the deployment and governance capabilities of cloud-native services.
 
 ## Specification 
 
@@ -10,7 +10,7 @@ kappital-package/
 ├─ manifests/                    # custom resource and extension resource
 │  ├─ crd.yaml                   # kubernetes CustomerResourceDefinition file
 │  └─ csd.yaml                   # CustomerServiceDefinition file，extension of CustomerResourceDefinition
-├─ capability/                   # capability config,inclue bbservability configuration, servicization configuration
+├─ capability/                   # capability config,include bbservability configuration, servicization configuration
 │  ├─ monitor.yaml               # monitor demo 
 │  ├─ logs.yaml                  # log demo
 │  └─ alarm.yaml                 # alarm demon
@@ -18,7 +18,7 @@ kappital-package/
 │  ├─ operator-deployment.yaml   # operator deployment config
 │  ├─ operator-clusterrole.yaml  # operator rabc config
 │  └─ operator-role.yaml         # operator rabc config
-└─ raw/                          # third-party package eg: helmchart,operator-framework 
+└─ raw/                          # third-party package eg: helm chart,operator-framework 
     └─ third-party-v1.0.tgz   
 ```
 
@@ -26,7 +26,7 @@ kappital-package/
 
 ## Metadata File
 
- Metadata File describe cloud-native service's basic attributes, such as name, version, type,description. More information see table below:
+ Metadata File describes cloud-native service's basic attributes such as name, version, type, description. More information see the table below:
 
  
 
@@ -40,7 +40,7 @@ kappital-package/
 | detailDescription | full description for service                                                                                 | NA                                          | NO       |
 | source            | service's source                                                                                             | bitnami                                     | NO       |
 | repository        | store repository                                                                                             | default                                     | NO       |
-| minKubeVersion    | support kubernetes minimun version                                                                           | 1.15                                        | NO       |
+| minKubeVersion    | support kubernetes minimum version                                                                           | 1.15                                        | NO       |
 | architecture      | support architecture                                                                                         | [x86, Arm64]                                | NO       |
 | capabilities      | define service capability. Scope: Basic Install,Seamless Upgrades, Full Lifecycle, Deep Insights, Auto Pilot | [Basic Install]                             | NO       |
 | category          | define service category, such as Database, Monitoring, Networking, Security, Storage                         | [Database, Storage]                         | NO       |
@@ -103,15 +103,15 @@ experience:
 
 ## Manifest  Directory
 
-manifest directory container two kind file: **CustomResourceDefinition(CRD)** and **CustomServiceDefinition(CSD)**. 
+Manifest directory contains two kind of files: **CustomResourceDefinition(CRD)** and **CustomServiceDefinition(CSD)**. 
 
-- CRD file define by kubernetes, more information refer to [CustomResourceDefinition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#customresourcedefinition-v1-apiextensions-k8s-io).
+- CRD file defines by Kubernetes, more information refers to [CustomResourceDefinition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#customresourcedefinition-v1-apiextensions-k8s-io).
 
-- CSD file define by Kappital, which to enhance CRD, support more capability such as service dependency, service access, service deployment.
+- CSD file defines by Kappital, which to enhance CRD, support more capability such as service dependency, service access, service deployment.
 
 
 
-**1. CustomServiceDefinition(CSD)**:  CSD use GVK to define what in CSD file, A CSD file w
+**1. CustomServiceDefinition(CSD)**:  CSD uses GVK to define what in CSD file, A CSD file w
 
 ```
 apiVersion: osc.io/v1beta1 
@@ -178,13 +178,13 @@ spec:
 
 **Operator directory** store all operator deploy files when this service's type is **Operator**. When service's type is **Helm**, this directory is empty.
 
-Generally, operator diectory containers operator workload file, role and rolebind file , clusterrole and clusterrolebind file. 
+Generally, operator directory containers operator workload file, role and rolebind file , clusterrole and clusterrolebind file. 
 
 
 
-## Rw Directory
+## Raw Directory
 
-**raw directory** store third-party service packages, support helmchart, operator-framework bundle.
+**raw directory** store third-party service packages, support helm chart, operator-framework bundle.
 
 
 
