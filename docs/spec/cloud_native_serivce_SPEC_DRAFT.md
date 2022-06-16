@@ -6,19 +6,19 @@ Cloud Native Service Specification(spec) provide a standard definition of cloud-
 
 ```shell
 kappital-package/ 
-├─ metadata.yaml    	# declare service meta message
-├─ manifests/           # custom resource and extension resource
-│  ├─ crd.yaml          # kubernetes CustomerResourceDefinition file
-│  └─ csd.yaml          # CustomerServiceDefinition file，extension of CustomerResourceDefinition
-├─ capability/          # capability config,inclue bbservability configuration, servicization configuration
-│  ├─ monitor.yaml      # monitor demo 
-│  ├─ logs.yaml 	    # log demo
-│  └─ alarm.yaml        # alarm demon
-├─ operator/            # operator deploy config
-│  ├─ operator-deployment.yaml  # operator deployment config
-│  ├─ operator-clusterrole.yaml # operator rabc config
-│  └─ operator-role.yaml        # operator rabc config
-└─ raw/ 	            # third-party package eg: helmchart,operator-framework 
+├─ metadata.yaml                 # declare service meta message
+├─ manifests/                    # custom resource and extension resource
+│  ├─ crd.yaml                   # kubernetes CustomerResourceDefinition file
+│  └─ csd.yaml                   # CustomerServiceDefinition file，extension of CustomerResourceDefinition
+├─ capability/                   # capability config,inclue bbservability configuration, servicization configuration
+│  ├─ monitor.yaml               # monitor demo 
+│  ├─ logs.yaml                  # log demo
+│  └─ alarm.yaml                 # alarm demon
+├─ operator/                     # operator deploy config
+│  ├─ operator-deployment.yaml   # operator deployment config
+│  ├─ operator-clusterrole.yaml  # operator rabc config
+│  └─ operator-role.yaml         # operator rabc config
+└─ raw/                          # third-party package eg: helmchart,operator-framework 
     └─ third-party-v1.0.tgz   
 ```
 
@@ -30,27 +30,27 @@ kappital-package/
 
  
 
-| name              | description                                                  | example                                     | required |
-| ----------------- | ------------------------------------------------------------ | ------------------------------------------- | -------- |
-| name              | service name, format "^[a-z][a-z0-9\_\-]*[a-z0-9]$"          | kappital-service                            | YES      |
-| version           | service version                                              | 0.1.0                                       | YES      |
-| type              | service' type                                                | helm \| operator                            | YES      |
-| alias             | service alias name                                           | kappital-service-0.1.0                      | NO       |
-| briefDescription  | short description for service                                | NA                                          | NO       |
-| detailDescription | full description for service                                 | NA                                          | NO       |
-| source            | service' source                                              | bitnami                                     | NO       |
-| repository        | store repository                                             | default                                     | NO       |
-| minKubeVersion    | support kubernetes minimun version                           | 1.15                                        | NO       |
-| architecture      | support architecture                                         | [x86, Arm64]                                | NO       |
+| Field Name        | Description                                                                                                  | Value Example                               | Required |
+|-------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------|----------|
+| name              | service name, format "^[a-z][a-z0-9\_\-]*[a-z0-9]$"                                                          | kappital-service                            | YES      |
+| version           | service version                                                                                              | 0.1.0                                       | YES      |
+| type              | service' type                                                                                                | [helm, operator]                            | YES      |
+| alias             | service alias name                                                                                           | kappital-service-0.1.0                      | NO       |
+| briefDescription  | short description for service                                                                                | NA                                          | NO       |
+| detailDescription | full description for service                                                                                 | NA                                          | NO       |
+| source            | service's source                                                                                             | bitnami                                     | NO       |
+| repository        | store repository                                                                                             | default                                     | NO       |
+| minKubeVersion    | support kubernetes minimun version                                                                           | 1.15                                        | NO       |
+| architecture      | support architecture                                                                                         | [x86, Arm64]                                | NO       |
 | capabilities      | define service capability. Scope: Basic Install,Seamless Upgrades, Full Lifecycle, Deep Insights, Auto Pilot | [Basic Install]                             | NO       |
-| category          | define service category, such as Database, Monitoring, Networking, Security, Storage | [Database, Storage]                         | NO       |
-| devices           | define service use devices,such as CPU, GPU, MPU             | [GPU]                                       | NO       |
-| industries        | define service belong to industry                            | [education]                                 |          |
-| logo              | service logo, include attributes: base64data, mediaType      | base64data: xxxx <br/> mediaType: image/png | NO       |
-| maintainers       | service maintainer, include attributes: name, email          | NA                                          | NO       |
-| provider          | service provider, include attributes: name, url              | NA                                          | NO       |
-| scenes            | support deploy scenes,                                       | [Cloud, Edge]                               | NO       |
-| links             | service link message, include attributes: name, url          | NA                                          | NO       |
+| category          | define service category, such as Database, Monitoring, Networking, Security, Storage                         | [Database, Storage]                         | NO       |
+| devices           | define service use devices,such as CPU, GPU, MPU                                                             | [GPU]                                       | NO       |
+| industries        | define service belong to industry                                                                            | [education]                                 | No       |
+| logo              | service logo, include attributes: base64data, mediaType                                                      | base64data: xxxx <br/> mediaType: image/png | NO       |
+| maintainers       | service maintainer, include attributes: name, email                                                          | NA                                          | NO       |
+| provider          | service provider, include attributes: name, url                                                              | NA                                          | NO       |
+| scenes            | support deploy scenes,                                                                                       | [Cloud, Edge]                               | NO       |
+| links             | service link message, include attributes: name, url                                                          | NA                                          | NO       |
 
 
 
