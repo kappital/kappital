@@ -1,7 +1,7 @@
 # Custom Service Definition
 
 ## Introduction
-**CustomServiceDefinition**, shorted by ***CSD* and expanding the original abilities of [CustomResourceDefinition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#customresourcedefinition-v1-apiextensions-k8s-io),
+**CustomServiceDefinition**, shorted by **CSD** and expanding the original abilities of [CustomResourceDefinition](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#customresourcedefinition-v1-apiextensions-k8s-io),
 is a unique and core concept of Kappital. It provides more abilities which are required and common used in industries such
 as service dependency, service access, service deployment, monitoring and logging.
 
@@ -14,7 +14,7 @@ The top-level attributes of a cloud-native service define its apiVersion, kind, 
 | Attribute    | Type                    | Required | Default Value               | Description                                                                                                                                                  |
 |--------------|-------------------------|----------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `apiVersion` | `string`                | Y        | `core.kappital.io/v1alpha1` | A string that identifies the version of the schema the object should have. The core types uses `core.kappital.io/v1alpha1` in this version of documentation. |
-| `kind`       | `string`                | Y        | `CustonServiceDefinition`   | Must be `CustonServiceDefinition`                                                                                                                            |
+| `kind`       | `string`                | Y        | `CustomServiceDefinition`   | Must be `CustomServiceDefinition`                                                                                                                            |
 | `metadata`   | [`Metadata`](#Metadata) | Y        |                             | Information about the CSD resource.                                                                                                                          |
 | `spec`       | [`Spec`](#spec)         | Y        |                             | A specification for the CSD resource attributes.                                                                                                             |
 
