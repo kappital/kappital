@@ -1,39 +1,54 @@
-# kappital
+# Kappital
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+__THIS PROJECT IS CURRENTLY IN PREVIEW. THE CODE AND DOCS ARE SUBJECT TO CHANGE WITHOUT NOTICE.__
 
-#### 软件架构
-软件架构说明
+Kappital is an open source project that enables developers to manage cloud native applications across multiple clouds and edges
+with no changes to developer's applications. Kappital defines [Cloud Native Service Package Specifications](./docs/spec/cloud_native_serivce_package_specification.md).
+By complying with spec, Kappital enhances service capabilities, observability to applications.
 
+## Why Kappital
+* **Unified Cloud Native Service Management**
+  - Web console and command-line client for centrally manages multiple clusters
+  - Full lifecycle management,such as install,upgrade,update,unInstall,state management
+* **Declarative Observability With Non-Intrusive**
+  - Zero-Code for logging,monitoring and alarm
+  - Support CNCF Observability project,such as prometheus, OpenTelemetry,Thanos
+* **Multi-Deployment Engine**
+  - Support Kubernetes Native deployment
+  - Support Helm,Operator-Framework, and other deploy framework
 
-#### 安装教程
+### Architecture
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+<div  align="center">
+<img src="./docs/images/architecture.jpg" width = "85%" align="center">
+</div>
 
-#### 使用说明
+The Kappital consists of the following components:
+* **Service-Catalog**
+  - Directory Cloud-Native Service Package. Support OCI storage format.
+  - Support HelmChart, Operator-Framework Bundle.
+* **Service-Manager**
+  - Support full lifecycle of Cloud-Native Service such as install, upgrade, update and uninstall.
+  - Deploy multi-cloud/multi-cluster/cloud-edge without any modifications.
+  - Support Day2 Operation.
+* **Service-Engine**
+  - Support popular frameworks such as Helm,operator-framework.
+  - Provide observability plugins. Enable monitoring,logging, alarm,etc.
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## Cloud Native Service Package Specifications
+Please refer to [Cloud Native Service Package Specifications](./docs/spec/cloud_native_serivce_package_specification.md)
+for more details about concepts of Kappital. 
 
-#### 参与贡献
+## Roadmap
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+* [2022 Roadmap](./roadmap.md)
 
+## Contributing
 
-#### 特技
+If you're interested in being a contributor and want to get involved in
+developing the Kappital code, please see [CONTRIBUTING](./contribute.md) for
+details on submitting patches and the contribution workflow.
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## License
+
+Kappital is under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
