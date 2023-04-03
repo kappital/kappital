@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "fileMatch": [ "metadata.yaml" ],
+  "type": "object",
+  "required": ["name", "version", "minKubeVersion", "briefDescription"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[\\w\\-]*$",
+      "description": "The name of the Kappital service package"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\d+)$",
+      "minLength": 3,
+      "maxLength": 64,
+      "description": "The version of the Kappital service package"
+    },
+    "minKubeVersion": {
+      "type": "string",
+      "pattern": "^[01].\\d{1,2}(\\.\\d{1,2})?$",
+      "description": "The minimum version of k8s cluster that this package requires to be successfully deployed"
+    },
+    "briefDescription": {
+      "type": "string",
+      "description": "Brief description of this package"
+    },
+    "source": {
+      "type": "string",
+      "default": "OpenSource",
+      "description": "The source of the package, indicating whether it's open-source or developed by an independent software provider, default to OpenSource.",
+      "enum": ["OpenSource", "ISV"]
+    },
+    "scenes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["Cloud", "Edge"]
+      },
+      "default": ["Cloud"],
+      "description": "The applicable deployment environment(s) of the package, defaults to Cloud only."
+    },
+    "type": {
+      "type": "string",
+      "default": "operator",
+      "description": "The original package type that this Kappital package is based on",
+      "enum": ["operator", "helm"]
+    }
+  }
+}

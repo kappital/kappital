@@ -1,0 +1,6 @@
+name: kappital-demo
+version: 0.1.0
+type: operator
+minKubeVersion: 1.15.0
+briefDescription: example package with an example operator and instance
+

@@ -1,0 +1,547 @@
+# Copyright 2022 Huawei Cloud Computing Technologies Co., Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+swagger: "2.0"
+info:
+  title: Kappital-Manager
+  description: ''
+  version: 0.1.0
+schemes:
+  - http
+  - https
+tags:
+  - name: Cloud Native Service Instance
+    description: The main concept of the Kappital. The CNSI is the runtime of Cloud Native Service (package), and it
+      install, search, or destory the user's custom instances. In other words, CNSI will install, search, or delete
+      the service and instance of the package.
+    externalDocs:
+      description: Find out more
+      url: ""
+  - name: Others
+    description: The other operation of Kappital-Manager, such as manage the cluster information. Not Public Yet.
+paths:
+  /api/v1alpha1/servicebinding:
+    get:
+      tags:
+        - Cloud Native Service Instance
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          type: string
+          default: default
+          name: cluster_name
+      responses:
+        "200":
+          description: An array of the CloudNativeServiceInstance
+          schema:
+            $ref: "#/definitions/CloudNativeServiceInstanceMetadata"
+        "500":
+          description: Cannot get the Cloud Native Service Instance from the cluster or database.
+    post:
+      tags:
+        - Cloud Native Service Instance
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ServiceInstanceCreation'
+      responses:
+        "200":
+          description: The success message of Deploying Clould Native Service Instance
+          schema:
+            $ref: '#/definitions/DeploySucceededMessage'
+        "400":
+          description: The request body is illegal, or cannot get useful information
+        "500":
+          description: The internal error of manager, such as cannot connect to the cluster or database.
+
+  /api/v1alpha1/servicebinding/{service_binding}:
+    get:
+      tags:
+        - Cloud Native Service Instance
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          type: string
+          required: true
+          name: service_binding
+        - in: query
+          type: string
+          default: default
+          name: cluster_name
+        - in: query
+          type: boolean
+          default: false
+          name: detail
+      responses:
+        "200":
+          description: The detail of the CloudNativeServiceInstance
+          schema:
+            $ref: "#/definitions/CloudNativeServiceInstanceDetail"
+        "400":
+          description: Parameters are error, or cannot get/find the Cloud Native Service Instance from cluster
+            or database.
+    delete:
+      tags:
+        - Cloud Native Service Instance
+      parameters:
+        - in: path
+          type: string
+          required: true
+          name: service_binding
+        - in: query
+          type: string
+          default: default
+          name: cluster_name
+      responses:
+        "200":
+          description: Delete the Clould Native Service Instance Successful.
+        "400":
+          description: Cannot Delete the Cloud Native Service Instance because cannot find the CNSI or other error.
+
+  /api/v1alpha1/servicebinding/{service_binding}/instance:
+    get:
+      tags:
+        - Cloud Native Service Instance
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: service_binding
+          required: true
+          type: string
+        - in: query
+          type: string
+          default: default
+          name: cluster_name
+        - in: query
+          type: string
+          default: default
+          name: namespace
+      responses:
+        "200":
+          description: This will return the Slice of Instance information from the database, and it is un-used for
+            the user (Only used by kappctl).
+          schema:
+            $ref: "#/definitions/InstanceMetadata"
+        "400":
+          description: Parameters are illegal.
+        "500":
+          description: Cannot get the user's instance information because of parameters error or not exist in
+            database or cluster.
+    post:
+      tags:
+        - Cloud Native Service Instance
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/ServiceInstanceCreation'
+        - in: path
+          name: service_binding
+          required: true
+          type: string
+      responses:
+        "200":
+          description: The success message of Deploying the user's custom resource for Cloud Native Service Instance
+        "400":
+          description: The request body is illegal, or cannot get useful information
+        "500":
+          description: The internal error of manager, such as cannot connect to the cluster or database.
+
+  /api/v1alpha1/servicebinding/{service_binding}/instance/{instance}:
+    get:
+      tags:
+        - Cloud Native Service Instance
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: service_binding
+          required: true
+          type: string
+        - in: path
+          name: instance
+          type: string
+          required: true
+        - in: query
+          type: string
+          default: default
+          name: cluster_name
+        - in: query
+          type: string
+          default: default
+          name: namespace
+        - in: query
+          type: string
+          default: false
+          name: detail
+      responses:
+        "200":
+          description: This will return the Instance information from the database, and it is un-used for
+            the user (Only used by kappctl).
+          schema:
+            $ref: "#/definitions/InstanceDetail"
+        "400":
+          description: Parameters are illegal.
+        "500":
+          description: Cannot get the user's instance information because of parameters error or not exist in
+            database or cluster.
+    delete:
+      tags:
+        - Cloud Native Service Instance
+      parameters:
+        - in: path
+          name: service_binding
+          required: true
+          type: string
+        - in: path
+          name: instance
+          type: string
+          required: true
+        - in: query
+          type: string
+          default: default
+          name: cluster_name
+        - in: query
+          type: string
+          default: default
+          name: namespace
+      responses:
+        "200":
+          description: Delete the instance successful.
+        "400":
+          description: Parameters are illegal.
+        "500":
+          description: Cannot delete the user's instance information because of parameters error or not exist in
+            database or cluster.
+definitions:
+  CloudNativeServiceInstanceMetadata:
+    type: object
+    properties:
+      TypeMeta:
+        type: object
+        properties:
+          Kind:
+            type: string
+            default: CloudNativeServiceInstance
+          APIVersion:
+            type: string
+            default: core.kappital.io/v1alpha1
+      ObjectMeta:
+        type: object
+        properties:
+          Name:
+            type: string
+            default: The Name of CloudNativeServiceInstance
+          Namespace:
+            type: string
+            default: kappital-system
+          CreateTimestamp:
+            type: string
+            format: 'date-time'
+  CloudNativeServiceInstanceDetail:
+    type: object
+    properties:
+      TypeMeta:
+        type: object
+        properties:
+          Kind:
+            type: string
+            default: CloudNativeServiceInstance
+          APIVersion:
+            type: string
+            default: core.kappital.io/v1alpha1
+      ObjectMeta:
+        type: object
+        properties:
+          Name:
+            type: string
+            default: The Name of CloudNativeServiceInstance
+          Namespace:
+            type: string
+            default: kappital-system
+          CreateTimestamp:
+            type: string
+            format: 'date-time'
+      Spec:
+        type: object
+        properties:
+          Name:
+            type: string
+          Version:
+            type: string
+          ServiceName:
+            type: string
+          ServiceID:
+            type: string
+          ClusterName:
+            type: string
+          Description:
+            type: string
+          CustomResources:
+            type: array
+            items:
+              type: object
+              properties:
+                TypeMeta:
+                  type: string
+                Name:
+                  type: string
+                Namespace:
+                  type: string
+                UID:
+                  type: string
+                Status:
+                  type: string
+                  enum:
+                    - Pending
+                    - Succeeded
+                    - Failed
+                    - Unknown
+                RawMessage:
+                  type: string
+          CapabilityResource:
+            type: array
+            items:
+              type: object
+              properties:
+                TypeMeta:
+                  type: string
+                Name:
+                  type: string
+                Namespace:
+                  type: string
+                UID:
+                  type: string
+                Status:
+                  type: string
+                  enum:
+                    - Pending
+                    - Succeeded
+                    - Failed
+                    - Unknown
+                RawMessage:
+                  type: string
+          ServiceReference:
+            type: object
+            properties:
+              TypeMeta:
+                type: string
+              Name:
+                type: string
+              Namespace:
+                type: string
+              UID:
+                type: string
+              Status:
+                type: string
+                enum:
+                  - Pending
+                  - Running
+                  - Succeeded
+                  - Failed
+                  - Unknown
+                  - Upgrading
+                  - Deleting
+                  - Deleted
+          DependentResource:
+            type: array
+            items:
+              type: object
+              properties:
+                TypeMeta:
+                  type: string
+                Name:
+                  type: string
+                Namespace:
+                  type: string
+                UID:
+                  type: string
+                Status:
+                  type: string
+                  enum:
+                    - Pending
+                    - Succeeded
+                    - Failed
+                    - Unknown
+                RawMessage:
+                  type: string
+      Status:
+        type: object
+        properties:
+          Phase:
+            type: string
+            enum:
+              - Pending
+              - Succeeded
+              - Failed
+              - Unknown
+          Message:
+            type: string
+          DependencyStatus:
+            type: array
+            items:
+              type: object
+              properties:
+                Phase:
+                  type: string
+                Message:
+                  type: string
+                ServiceID:
+                  type: string
+                ServiceName:
+                  type: string
+                ServiceVersion:
+                  type: string
+  ServiceInstanceCreation:
+    type: object
+    properties:
+      InstanceName:
+        type: string
+      ClusterID:
+        type: string
+      Service:
+        type: object
+        description: CloudNativeService, For more information in swagger.yaml
+      InstanceCustomResources:
+        type: array
+        items:
+          type: object
+          properties:
+            TypeMeta:
+              type: object
+              properties:
+                Kind:
+                  type: string
+                  default: CloudNativeServiceInstance
+                APIVersion:
+                  type: string
+                  default: core.kappital.io/v1alpha1
+            ObjectMeta:
+              type: object
+              properties:
+                Name:
+                  type: string
+                  default: The Name of CloudNativeServiceInstance
+                Namespace:
+                  type: string
+                  default: kappital-system
+                CreateTimestamp:
+                  type: string
+                  format: 'date-time'
+            Spec:
+              type: string
+              description: The Raw message of the instance.
+  DeploySucceededMessage:
+    type: object
+    properties:
+      Name:
+        type: string
+      ID:
+        type: string
+  InstanceMetadata:
+    type: object
+    properties:
+      ID:
+        type: string
+      Kind:
+        type: string
+      APIVersion:
+        type: string
+      Name:
+        type: string
+      Namespace:
+        type: string
+      Status:
+        type: string
+        enum:
+          - Initializing
+          - Initialized
+          - InitFailed
+          - Failed
+          - Upgrading
+          - RollingBack
+          - Deleting
+          - UpgradingFailed
+          - DeleteFailed
+          - RollBackFailed
+  InstanceDetail:
+    type: object
+    properties:
+      ID:
+        type: string
+      Kind:
+        type: string
+      APIVersion:
+        type: string
+      Name:
+        type: string
+      Namespace:
+        type: string
+      ServiceBindingID:
+        type: string
+      RawResource:
+        type: string
+      Status:
+        type: string
+        enum:
+          - Initializing
+          - Initialized
+          - InitFailed
+          - Failed
+          - Upgrading
+          - RollingBack
+          - Deleting
+          - UpgradingFailed
+          - DeleteFailed
+          - RollBackFailed
+      ErrorMessage:
+        type: string
+      InstanceType:
+        type: string
+        enum:
+          - Helm
+          - Operator
+      ServiceName:
+        type: string
+      ClusterName:
+        type: string
+      PackageDependencies:
+        type: string
+      CreateTimestamp:
+        type: string
+        format: 'date-time'
+      ProcessTime:
+        type: string
+        format: 'date-time'
+      UpdateTime:
+        type: string
+        format: 'date-time'
+      InstanceStatus:
+        type: string
+
+
+
+

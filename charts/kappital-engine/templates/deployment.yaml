@@ -1,0 +1,116 @@
+# Copyright 2022 Huawei Cloud Computing Technologies Co., Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kappital-engine
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: kappital-engine
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kappital-engine
+  template:
+    metadata:
+      labels:
+        app: kappital-engine
+    spec:
+      serviceAccountName: kappital-engine
+      initContainers:
+        - name: kappital-engine-init
+          command:
+            - /bin/sh
+            - -c
+            - touch /opt/kappital/log/kappital-engine.log;
+              chown -R kappital:kappital /opt/kappital/log;
+              chmod 750 /opt/kappital/log;
+              chmod 640 /opt/kappital/log/kappital-engine.log
+          {{ if empty .Values.image.registry  }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          {{ else }}
+          image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          {{ end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources: {}
+          securityContext:
+            runAsUser: 0
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/kappital/log
+              name: log
+      containers:
+        - name: kappital-engine
+          command:
+            - /bin/bash
+            - -c
+            - /opt/kappital/kappital-engine/kappital-engine 1>> /opt/kappital/log/kappital-engine.log 2>&1
+          env:
+            - name: OPERATOR_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: OPERATOR_NAME
+              value: kappital-engine
+          {{ if empty .Values.image.registry  }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          {{ else }}
+          image: "{{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          {{ end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.livenessReadiness.port }}
+          livenessProbe:
+            httpGet:
+              port: {{ .Values.livenessReadiness.port }}
+              path: /healthz
+              scheme: {{ .Values.livenessReadiness.scheme }}
+          readinessProbe:
+            httpGet:
+              port: {{ .Values.livenessReadiness.port }}
+              path: /readyz
+              scheme: {{ .Values.livenessReadiness.scheme }}
+          terminationMessagePolicy: FallbackToLogsOnError
+          resources:
+            requests:
+              cpu: 10m
+              memory: 160Mi
+          volumeMounts:
+            - name: localtime
+              readOnly: true
+              mountPath: '/etc/localtime'
+            - mountPath: /opt/kappital/log
+              name: log
+              readOnly: false
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      securityContext:
+        runAsUser: 10000
+        fsGroup: 10000
+      volumes:
+        - hostPath:
+            path: '/etc/localtime'
+          name: localtime
+        {{ if empty .Values.log.hostPath }}
+        - emptyDir: {}
+          name: log
+        {{ else }}
+        - hostPath:
+            path: {{ .Values.log.hostPath }}
+          name: log
+        {{ end }}

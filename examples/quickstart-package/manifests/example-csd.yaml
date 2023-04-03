@@ -1,0 +1,27 @@
+apiVersion: core.kappital.io/v1alpha1
+kind: CustomServiceDefinition
+metadata:
+  name: example-csd
+spec:
+  CRDName: examples.kappital.io
+  CRVersions:
+    - name: v1
+      CRName: quickstart
+      defaultValues:
+    - name: v1alpha1
+      CRName: quickstart
+      defaultValues:
+
+  role: ServiceEntity
+
+  // TODO: 通过此字段将crd与扩展能力的定义相关联
+  capabilityRequirements:
+    - apiVersion: core.kappital.io/v1alpha1
+      kind: MonitorConfig
+      defaultPath: monitor.yaml
+    - apiVersion: core.kappital.io/v1alpha1
+      kind: LogConfig
+      defaultPath: log.yaml
+    - apiVersion: core.kappital.io/v1alpha1
+      kind: AlarmConfig
+      defaultPath: alarm.yaml

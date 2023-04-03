@@ -1,0 +1,14 @@
+apiVersion: core.kappital.io/v1alpha1
+kind: CustomServiceDefinition
+metadata:
+  name: example-csd
+spec:
+  CRDName: examples.kappital.io
+  CRVersions:
+    - name: v1
+      CRName: quickstart
+      defaultValues:
+    - name: v1alpha1
+      CRName: quickstart
+      defaultValues:
+  role: ServiceEntity

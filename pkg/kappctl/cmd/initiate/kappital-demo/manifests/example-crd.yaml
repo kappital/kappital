@@ -1,0 +1,17 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: examples.kappital.io
+spec:
+  group: examples.kappital.io
+  names:
+    kind: Example
+    plural: examples
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+    - name: v1alpha1
+      served: true
+      storage: true
