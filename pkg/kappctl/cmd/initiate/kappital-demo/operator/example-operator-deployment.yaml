@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: example-operator
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        name: example-operator
+    spec:
+      containers:
+        - command:
+            - example-operator
+          image: image_name:tag
+          imagePullPolicy: IfNotPresent
+          name: example-operator
+          resources: {}
+      serviceAccountName: example-operator-role

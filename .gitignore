@@ -1,0 +1,16 @@
+.idea
+.vscode
+.run
+
+bin
+certs
+data
+log
+
+*.key
+*.crt
+*.exe
+/codecheck_settings.xml
+/findbugs-result.xml
+
+build/output

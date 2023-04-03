@@ -1,0 +1,161 @@
+# Copyright 2022 Huawei Cloud Computing Technologies Co., Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: v1
+kind: Service
+metadata:
+  name: kappital-manager-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: kappital-manager
+spec:
+  type: ClusterIP
+  clusterIP: {{ .Values.manager.service.clusterIP }}
+  ports:
+    - port: {{ .Values.manager.service.httpsPort }}
+      targetPort: {{ .Values.manager.service.httpsPort }}
+      protocol: TCP
+      name: manager-https
+  selector:
+    app: kappital-manager
+  sessionAffinity: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kappital-manager
+  namespace: kappital-system
+  labels:
+    app: kappital-manager
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kappital-manager
+  template:
+    metadata:
+      labels:
+        app: kappital-manager
+    spec:
+      serviceAccountName: kappital-manager
+      hostNetwork: {{ .Values.manager.hostNetwork }}
+      volumes:
+        {{ if empty .Values.manager.logDir }}
+        - emptyDir: {}
+          name: log
+        {{ else }}
+        - hostPath:
+            path: {{ .Values.manager.logDir }}
+          name: log
+        {{ end }}
+        - hostPath:
+            path: '/etc/localtime'
+          name: localtime
+        - name: conf
+          secret:
+            secretName: kappital-manager-certs
+            defaultMode: 0600
+            items:
+              - key: server.crt
+                path: server.crt
+              - key: server.key
+                path: server.key
+              - key: ca.crt
+                path: ca.crt
+      initContainers:
+        - name: manager-init
+          command:
+            - /bin/sh
+            - -c
+            - mkdir -p /opt/kappital/log;
+              touch /opt/kappital/log/kappital-manager.log;
+              chmod 750 /opt/kappital/log;
+              chmod 640 /opt/kappital/log/kappital-manager.log;
+              chmod 750 /opt/kappital/audit;
+              chmod 640 /opt/kappital/audit/audit.log;
+              chown -R kappital:kappital /opt/kappital/log;
+              chown -R kappital:kappital /opt/kappital/audit
+          {{ if empty .Values.manager.image.registry  }}
+          image: "{{ .Values.manager.image.name }}:{{ .Values.manager.image.tag }}"
+          {{ else }}
+          image: "{{ .Values.manager.image.registry }}/{{ .Values.manager.image.name }}:{{ .Values.manager.image.tag }}"
+          {{ end }}
+          imagePullPolicy: {{ .Values.manager.image.pullPolicy }}
+          securityContext:
+            runAsUser: 0
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/kappital/log
+              name: log
+      containers:
+        - name: manager
+          ports:
+            - containerPort: 8080
+          command:
+            - /bin/bash
+            - -c
+            - /opt/kappital/manager/kappital-manager 1>> /opt/kappital/log/kappital-manager.log 2>&1
+          env:
+            - name: APP_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: APP_NAME
+              value: manager
+            - name: MANAGER_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          envFrom:
+            - configMapRef:
+                name: manager-config
+          {{ if empty .Values.manager.image.registry  }}
+          image: "{{ .Values.manager.image.name }}:{{ .Values.manager.image.tag }}"
+          {{ else }}
+          image: "{{ .Values.manager.image.registry }}/{{ .Values.manager.image.name }}:{{ .Values.manager.image.tag }}"
+          {{ end }}
+          imagePullPolicy: {{ .Values.manager.image.pullPolicy }}
+          terminationMessagePolicy: FallbackToLogsOnError
+          resources:
+            requests:
+              cpu: 10m
+              memory: 160Mi
+          volumeMounts:
+            - name: localtime
+              readOnly: true
+              mountPath: '/etc/localtime'
+            - mountPath: /opt/kappital/log
+              name: log
+              readOnly: false
+            - name: conf
+              readOnly: true
+              mountPath: /opt/kappital/certs/conf/server.crt
+              subPath: server.crt
+            - name: conf
+              readOnly: true
+              mountPath: /opt/kappital/certs/conf/server.key
+              subPath: server.key
+            - name: conf
+              readOnly: true
+              mountPath: /opt/kappital/certs/conf/ca.crt
+              subPath: ca.crt
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      securityContext:
+        runAsUser: 10000
+        runAsGroup: 10000
+        fsGroup: 10000
+        fsGroupChangePolicy: "Always"

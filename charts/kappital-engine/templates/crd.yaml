@@ -1,0 +1,105 @@
+# Copyright 2022 Huawei Cloud Computing Technologies Co., Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: servicepackages.core.kappital.io
+spec:
+  group: core.kappital.io
+  names:
+    kind: ServicePackage
+    listKind: ServicePackageList
+    plural: servicepackages
+    singular: servicepackage
+    shortNames:
+      - sp
+      - sps
+  scope: Namespaced
+  versions:
+    - name: v1alpha1
+      schema:
+        openAPIV3Schema:
+          description: ServicePackage is the Schema for the kappitalpackages API
+          properties:
+            apiVersion:
+              type: string
+            kind:
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: ServicePackageSpec defines the desired state of KappitalPackage
+              properties:
+                name:
+                  description: Name is the service name
+                  type: string
+                rawResources:
+                  description: RawResources is a slice of non-kappital packages resources
+                  items:
+                    description: RawResource is the resources for the service except
+                      Kappital, such as helm, etc.
+                    properties:
+                      raw:
+                        type: string
+                      type:
+                        type: string
+                    required:
+                      - raw
+                      - type
+                    type: object
+                  type: array
+                resources:
+                  description: Resources is a base64 binary code, it will be analysis
+                    by kappital-engine to the service instance resources, such as custom
+                    resource, cluster role, cluster role binding, and workload etc.
+                  type: string
+                serviceID:
+                  description: ServiceID is the unique id for the service which from
+                    service package
+                  type: string
+                version:
+                  description: Version is the version of this service
+                  type: string
+              required:
+                - name
+                - serviceID
+              type: object
+            status:
+              description: ServicePackageStatus defines the observed state of KappitalPackage
+              properties:
+                currentVersion:
+                  type: string
+                lastScheduleTime:
+                  format: date-time
+                  type: string
+                phase:
+                  type: string
+                reason:
+                  type: string
+              type: object
+          type: object
+      served: true
+      storage: true
+      additionalPrinterColumns:
+        - jsonPath: .spec.version
+          name: Version
+          type: string
+        - jsonPath: .spec.serviceID
+          name: ServiceID
+          type: string
+        - jsonPath: .status.lastScheduleTime
+          name: LastScheduleTime
+          type: string
+      subresources:
+        status: {}

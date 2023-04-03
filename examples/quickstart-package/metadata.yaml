@@ -1,0 +1,41 @@
+# required fields
+name: example-operator
+version: 0.5.3
+type: operator
+minKubeVersion: 1.15.0
+briefDescription: example package with an example operator and instance
+
+# optional fields
+source: OpenSource
+scenes:
+  - Edge
+  - Cloud
+logo:
+  base64data: xxxx
+  mediaType: image/png
+maintainers:
+  - email: test@test.com
+    name: test
+provider:
+  name: Example provider
+  url: "the url of website, format as http or https"
+links:
+  - name: example link
+    url:  "the url of website, format as http or https"
+keywords:
+  - Database
+  - Devops
+architecture:
+  - x86
+  - arm64
+capabilities:
+  - Basic Install
+categories:
+  - Database
+devices:
+  - GPU
+  - MPU
+industries:
+  - education
+  - media
+
