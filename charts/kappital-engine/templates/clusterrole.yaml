@@ -32,3 +32,4 @@ subjects:
   - kind: ServiceAccount
     name: kappital-engine
     namespace: {{ .Values.namespace }}
+

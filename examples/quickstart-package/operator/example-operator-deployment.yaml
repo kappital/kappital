@@ -21,3 +21,4 @@ spec:
           name: example-operator
           resources: {}
       serviceAccountName: example-operator-role
+

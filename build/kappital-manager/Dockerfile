@@ -27,3 +27,4 @@ RUN chown -R kappital:kappital /opt/kappital/ && \
     chmod 750 /opt/kappital/manager && \
     chmod 550 /opt/kappital/manager/kappital-manager && \
     chmod -R 700 /opt/kappital/certs
+

@@ -70,3 +70,4 @@ subjects:
   - kind: ServiceAccount
     name: kappital-manager
     namespace: {{ .Values.namespace }}
+

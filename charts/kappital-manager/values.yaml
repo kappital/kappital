@@ -33,3 +33,4 @@ manager:
     httpsCertFile: "/opt/kappital/certs/conf/server.crt"
     httpsKeyFile: "/opt/kappital/certs/conf/server.key"
     trustCaFile: "/opt/kappital/certs/conf/ca.crt"
+

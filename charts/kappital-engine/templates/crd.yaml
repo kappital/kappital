@@ -103,3 +103,4 @@ spec:
           type: string
       subresources:
         status: {}
+
